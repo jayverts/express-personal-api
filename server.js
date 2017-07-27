@@ -58,18 +58,11 @@ app.get('/api/abouts', function (req, res) {
   });
 });
 
-app.post('/api/projects', function (req, res) {
-  // create new book with form data (`req.body`)
-  var newProject = new db.Project({
-    name: req.body.name,
-    type: req.body.type,
-    scared_level: req.body.scared_level,
-});
-newProject.save(function(err, project) {
-  if (err) {
-    return console.log("save error: " + err);
-  }
-  res.json(projects);
+app.get('/api/projects', function (req, res) {
+  db.Project.find()
+    .exec(function(err, projects) {
+      if (err) { return console.log("index error: " + err); }
+      res.json(projects);
   });
 });
 
