@@ -45,7 +45,7 @@ app.get('/api', function api_index(req, res) {
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/abouts", description: "Data about me"},
-      {method: "POST", path: "/api/projects", description: "Upcoming Projects...."} // Have not been able to get this to render yet
+      {method: "POST", path: "/api/projects", description: "Upcoming Projects...."}
     ]
   });
 });
@@ -65,6 +65,42 @@ app.get('/api/projects', function (req, res) {
       res.json(projects);
   });
 });
+
+app.post('/api/projects', function (req, res) {
+  var newProject = new db.Project({
+    name: req.body.name,
+    type: req.body.type,
+    scared_level: req.body.scared_level,
+  });
+    newProject.save(function(err, projects){
+      if (err) {
+        return console.log("save error: " + err);
+      }
+      console.log("saved ");
+      // send back the book!
+      res.json(projects);
+    });
+  });
+
+// app.post('/api/projects', function (req, res) {
+//   // create new book with form data (`req.body`)
+//   var newProject = new db.Project({
+//     name: req.body.name,
+//     type: req.body.type,
+//     scared_level: req.body.scared_level,
+//   });
+//     // save newBook to database
+//     newProject.save(function(err, book){
+//       if (err) {
+//         return console.log("save error: " + err);
+//       }
+//       console.log("saved");
+//       // send back the book!
+//       res.json(project);
+//     });
+//   });
+
+
 
 // get one book
 // app.get('/api/books/:id', function (req, res) {

@@ -34,14 +34,23 @@ db.About.create(aboutMe, function(err, abouts) {
     return console.log("Error: ", err);
   }
   console.log("Created new entry");
-  process.exit();
 });
 
-db.Project.create(upcomingProjects, function(err, projects) {
+db.Project.remove({}, function(err, projects){
+  console.log('removed all projects');
+db.Project.create(upcomingProjects, function(err,projects) {
   if (err) {
-    return console.log("Error creating projects: ", err);
+    return console.log("error: ", err);
   }
-  console.log("created New Project");
+  console.log("Created New Project");
+ }) ;
+  upcomingProjects.forEach(function (projectData) {
+    var project = new db.Project({
+      name: projectData.name,
+      type: projectData.image,
+      scared_level: projectData.scared_level
+      });
+    });
   });
 });
 
